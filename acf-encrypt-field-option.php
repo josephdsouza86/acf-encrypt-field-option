@@ -173,6 +173,7 @@ class acf_encrypt_field_option
     
         // Build CSS for this encrypted fields configuration
         $field_selector = '.acf-field-' . substr($field['key'], 6);
+        $input_selector = $field['id'];
         $css = "{$field_selector} label:after {
             content: ' (encrypted)';
             font-size: 80%;
@@ -186,26 +187,22 @@ class acf_encrypt_field_option
 
         if (!$is_visible) { 
             // Don't show the field if the user doesn't have permission. Post a blank hidden field instead
-            ?>
-            <style type="text/css"><?= $css; ?></style>
-            <p><?= __('Field is hidden'); ?></p>
-            <input type="hidden" name="<?= $field['name']; ?>" value="encrypted" />
-            <?php
-            return false;
-        }
-
-        if ($hide_value) {
+            $field['type'] = 'message';
+            $field['message'] = __('You do not have permission to view this field.');
+            $field['value'] = '';
+        } 
+        
+        if ($is_visible && $hide_value) {
             // Hide the value and show a button to reveal it
-            $css .= "{$field_selector} .acf-input-wrap input {
+            $css .= "#{$input_selector} {
                 display: none;
             }";
             ?>
-            <style type="text/css"><?= $css; ?></style>
             <script>
                 (function () {
                     document.addEventListener('DOMContentLoaded', function () {
                         var inputWrapper = document.querySelector('<?= $field_selector; ?>');
-                        var input = inputWrapper.querySelector('input');
+                        var input = document.getElementById('<?= $input_selector; ?>');
                         var button = document.createElement('a');
                         button.href = '#';
                         button.innerHTML = (input.value) ? 'Click to Show' : 'Click to Add';
@@ -221,12 +218,11 @@ class acf_encrypt_field_option
                 }());
             </script>
             <?php
-        } else {
-            // Default, just add the encrypted label
-            ?>
-            <style type="text/css"><?= $css; ?></style>
-            <?php
         }
+
+        ?>
+        <style type="text/css"><?= $css; ?></style>
+        <?php
 
         return $field;
     }
