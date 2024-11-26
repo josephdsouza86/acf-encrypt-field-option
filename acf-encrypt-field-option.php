@@ -1,11 +1,12 @@
 <?php
 /*
 Plugin Name: Advanced Custom Fields Encrypt Field Option
-Plugin URI: https://github.com/ptouch718/acf-encrypt-field-option
+Plugin URI: https://github.com/josephdsouza86/acf-encrypt-field-option
 Description: Adds an option to encrypt text field values upon save
-Version: 1.1.0
-Author: Powell May 
+Version: 1.2.0
+Author: Originally by Powell May, Forked by Joseph Dsouza
 Author URI: https://github.com/ptouch718
+Contributors: josephdsouza86
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
